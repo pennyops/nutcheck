@@ -49,3 +49,23 @@ def run_nut14(nuts_dir, report):
         return
     ok = hashlib.sha256(bytes.fromhex(p.group(1))).hexdigest() == d.group(1)
     report("NUT-14", "prose example: SHA256(preimage) == Secret.data", ok, "hash mismatch")
+
+
+def run_nut11(nuts_dir, report):
+    """11.md quotes a signed P2PK proof: its witness signature must verify
+    (BIP340 over SHA256(Proof.secret)) against Secret.data."""
+    import hashlib
+    import json
+    from .nut11 import schnorr_verify
+    path = os.path.join(nuts_dir, "11.md")
+    if not os.path.exists(path):
+        return
+    text = open(path, encoding="utf-8").read()
+    m = re.search(r'```json\n(\{\n  "amount": \d+,\n  "secret": "\[\\"P2PK.*?\n\})\n```', text, re.S)
+    if not m:
+        report("NUT-11", "signed P2PK proof example found in 11.md", False, "pattern not found")
+        return
+    p = json.loads(m.group(1))
+    s, w = json.loads(p["secret"]), json.loads(p["witness"])
+    ok = schnorr_verify(hashlib.sha256(p["secret"].encode()).digest(), s[1]["data"], w["signatures"][0])
+    report("NUT-11", "prose example: P2PK proof witness signature verifies", ok, "bad signature")
