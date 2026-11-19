@@ -46,7 +46,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
 Planned: more NUTs as vectors are published.
 
-Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64).
+Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64), [cashubtc/nuts#485](https://github.com/cashubtc/nuts/pull/485) (NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage).
 
 ## Is the checker itself trustworthy? (mutation self-test)
 
