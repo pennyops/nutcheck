@@ -5,9 +5,9 @@ Usage: python3 -m nutcheck PATH_TO_NUTS_REPO
 import os
 import sys
 
-from . import nut00, nut02, nut11, nut12, nut13, tokens
+from . import nut00, nut01, nut02, nut11, nut12, nut13, nut20, tokens
 
-MODULES = [("00-tests.md", nut00), ("00-tests.md", tokens), ("02-tests.md", nut02), ("11-test.md", nut11), ("12-tests.md", nut12), ("13-tests.md", nut13)]
+MODULES = [("00-tests.md", nut00), ("00-tests.md", tokens), ("01-tests.md", nut01), ("02-tests.md", nut02), ("11-test.md", nut11), ("12-tests.md", nut12), ("13-tests.md", nut13), ("20-test.md", nut20)]
 
 
 def main(argv):
