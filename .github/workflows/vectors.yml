@@ -16,6 +16,7 @@ jobs:
       - run: git clone --depth 1 https://github.com/cashubtc/nuts nuts
       - run: python3 -m nutlint ./nuts
       - run: python3 tests/test_inspect.py
+      - run: python3 -m nutlint --version
       - name: run as a GitHub Action
         uses: ./
         with:
