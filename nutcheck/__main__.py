@@ -1,6 +1,7 @@
 """nutcheck: verify Cashu NUT spec test vectors with an independent implementation.
 
 Usage: python3 -m nutcheck PATH_TO_NUTS_REPO
+       python3 -m nutcheck token TOKEN [--keys KEYS.json | --fetch]
 """
 import os
 import sys
@@ -11,6 +12,9 @@ MODULES = [("00-tests.md", nut00), ("00-tests.md", tokens), ("01-tests.md", nut0
 
 
 def main(argv):
+    if len(argv) >= 2 and argv[1] == "token":
+        from . import inspect
+        return inspect.main(argv[2:])
     if len(argv) != 2:
         print(__doc__)
         return 2
