@@ -73,6 +73,7 @@ mint's keyset without contacting the mint about the token itself:
 nutcheck token cashuB...                    # decode + structural checks, fully offline
 nutcheck token cashuB... --keys keys.json   # verify DLEQ against a saved /v1/keys response
 nutcheck token cashuB... --fetch            # download the public keyset from the token's mint, then verify
+nutcheck token creqA...                     # decode a NUT-18 payment request
 ```
 
 ```
