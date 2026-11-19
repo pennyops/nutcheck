@@ -16,6 +16,11 @@ Built from scratch for [Nut November 2026](https://nutnovember.org) (#NutNovembe
 the whole project (first commit 2026-11-19, MIT) and the spec pull requests it led to
 (cashubtc/nuts #484-#489) were made during November. Nothing existed before.
 
+Not to be confused with [nutcheck.org](https://nutcheck.org), an unrelated
+#NutNovember project that grades live Cashu mints. This repo checks the
+*specification* (test vectors and prose examples in cashubtc/nuts) offline;
+it never talks to a mint unless you pass `--fetch`.
+
 Use it to:
 
 - sanity-check vector changes in a NUT pull request before merging;
