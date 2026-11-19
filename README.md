@@ -39,11 +39,14 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 13 | BIP39 seed, legacy BIP32 derivation (v1), HMAC-SHA256 KDF (v2), P2PK key derivation |
 | 18 | payment requests: `creqA` + CBOR decode equals the JSON, byte-exact CBOR re-encode (incl. CBOR `undefined`); WARNs on non-urlsafe base64 in vectors |
 | 20 | quote-locking key derivation (m/129373'/20'/...), `msg_to_sign` bytes and hash, BIP340 mint-request signature, tamper rejection |
+| 26 | `creqb` payment requests: own Bech32m (checksum const + HRP), TLV decode equals the JSON (unit compact `sat`, transports with NIP-19 npub/nprofile pubkey + relay tags, NUT-10 locks, `mp`, `sm`), byte-exact Bech32m re-encode |
 | 27 | Nostr mint-backup key derivation (SHA256(seed \|\| domain separator), x-only pubkey) |
 | 28 | P2BK: ECDH Zx symmetry, blinding scalars r0..r10, blinded keys P', skStd/skNeg, parity rule (chosen key really signs for P'), example proof slots |
 | 29 | batch mint: offline request-shape rules (empty / duplicate quotes, signatures length), per-quote NUT-20 signature over the full outputs array |
 
-Planned: NUT-11 SIG_ALL full request verification, NUT-26 payment requests.
+Planned: NUT-11 SIG_ALL full request verification.
+
+Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64).
 
 ## Warning
 
