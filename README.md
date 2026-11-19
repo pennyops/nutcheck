@@ -37,8 +37,21 @@ PASS  NUT-12  deterministic proof verifies
 PASS  NUT-12  BlindSignature DLEQ valid
 PASS  NUT-12  Proof DLEQ valid (reblinded)
 ...
+WARN  NUT-18  Complete Payment Request: vector uses standard base64 ('+' or '/'), spec says base64_urlsafe
+WARN  NUT-18  HTTP Transport Payment Request: vector uses standard base64 ('+' or '/'), spec says base64_urlsafe
+WARN  NUT-26  nut10.d is not a hex hash/pubkey: a]0e66820b... (vector typo; JSON and TLV agree)
+WARN  NUT-20  20.md example mint request: signature does not verify for the quoted pubkey
+WARN  NUT-25  25.md example mint request: quote has a pubkey but the request has no signature
+WARN  NUT-05  05.md:191 example melt quote (PENDING) is missing request
+WARN  NUT-05  05.md:210 example melt quote (PAID) is missing method
+WARN  PROSE   11.md:250 example point 02e2aeb97f47690e... is not on secp256k1
+WARN  PROSE   14.md:141 example point 02e2aeb97f47690e... is not on secp256k1
+WARN  PROSE   29.md:180 example point 0208657b2917f469... is not on secp256k1
+WARN  PROSE   29.md:181 example point 037dc0b5e712a39e... is not on secp256k1
 243 checks, 243 passed, 0 failed
 ```
+
+`WARN` lines are spec problems that do not break a vector: example values in the prose that disagree with the spec's own rules or code (bad example points, signatures that do not verify, missing fields, wrong base64 alphabet). Each one above has an open fix upstream (see Coverage). They do not change the exit code.
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
