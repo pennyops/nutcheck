@@ -98,6 +98,17 @@ FAIL  [1]      2 keyset 00ad268c4d1f5826 secret=random DLEQ INVALID  (DLEQ INVAL
 passes, then flips one bit of a proof and checks that it is rejected. The tool never spends, swaps, or
 sends the token anywhere; `--fetch` only downloads the mint's public keys.
 
+## Use as a GitHub Action
+
+Run nutlint in CI on a checkout of the spec (for example on every pull request to cashubtc/nuts or a fork):
+
+```yaml
+- uses: actions/checkout@v4
+- uses: pennyops/nutlint@main
+  with:
+    path: .   # the spec checkout
+```
+
 ## Check a spec pull request before merging
 
 nutlint runs on any checkout of the spec, so a reviewer can test a proposed change to the vectors or examples:
