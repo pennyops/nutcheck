@@ -25,6 +25,21 @@ git clone --depth 1 https://github.com/cashubtc/nuts
 python3 -m nutcheck ./nuts
 ```
 
+Sample output (excerpt):
+
+```
+PASS  NUT-12  hash_e
+PASS  NUT-12  nonce vector: A == a*G
+PASS  NUT-12  nonce vector: C_ == a*B_
+PASS  NUT-12  deterministic e
+PASS  NUT-12  deterministic s
+PASS  NUT-12  deterministic proof verifies
+PASS  NUT-12  BlindSignature DLEQ valid
+PASS  NUT-12  Proof DLEQ valid (reblinded)
+...
+236 checks, 236 passed, 0 failed
+```
+
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
 ## Coverage
