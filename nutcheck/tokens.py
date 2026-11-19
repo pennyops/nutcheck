@@ -10,6 +10,14 @@ import struct
 
 
 # ---------------- CBOR ----------------
+class _Undefined:
+    def __repr__(self):
+        return "undefined"
+
+
+UNDEFINED = _Undefined()  # CBOR simple value 23
+
+
 def _head(major, n):
     if n < 24:
         return bytes([major << 5 | n])
@@ -26,6 +34,8 @@ def cbor_encode(obj):
         return b"\xf4"
     if obj is None:
         return b"\xf6"
+    if obj is UNDEFINED:
+        return b"\xf7"
     if isinstance(obj, int):
         return _head(0, obj) if obj >= 0 else _head(1, -1 - obj)
     if isinstance(obj, bytes):
@@ -97,7 +107,7 @@ def _dec(d, i):
             count += 1
         return out, (i + 1 if n is None else i)
     if major == 7:
-        return {20: False, 21: True, 22: None}[ai], i
+        return {20: False, 21: True, 22: None, 23: UNDEFINED}[ai], i
     raise ValueError(f"unsupported CBOR major type {major}")
 
 
