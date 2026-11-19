@@ -25,6 +25,13 @@ git clone --depth 1 https://github.com/cashubtc/nuts
 python3 -m nutcheck ./nuts
 ```
 
+Or install it as a command (no dependencies):
+
+```
+pip install git+https://github.com/pennyops/nutcheck
+nutcheck ./nuts
+```
+
 Sample output (excerpt):
 
 ```
