@@ -1,7 +1,7 @@
-"""nutcheck: verify Cashu NUT spec test vectors with an independent implementation.
+"""nutlint: verify Cashu NUT spec test vectors with an independent implementation.
 
-Usage: python3 -m nutcheck PATH_TO_NUTS_REPO
-       python3 -m nutcheck token TOKEN [--keys KEYS.json | --fetch]
+Usage: python3 -m nutlint PATH_TO_NUTS_REPO
+       python3 -m nutlint token TOKEN [--keys KEYS.json | --fetch]
 """
 import os
 import sys
@@ -56,5 +56,5 @@ if __name__ == "__main__":
 
 
 def cli():
-    """Console-script entry point (`nutcheck PATH`)."""
+    """Console-script entry point (`nutlint PATH`)."""
     sys.exit(main(sys.argv))

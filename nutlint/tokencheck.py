@@ -1,10 +1,10 @@
 """Inspect a Cashu token (cashuA / cashuB): decode it, sanity-check it and verify DLEQ proofs offline.
 
 Usage:
-  nutcheck token TOKEN                     decode + structural checks
-  nutcheck token creqA...                  decode a NUT-18 payment request
-  nutcheck token TOKEN --keys KEYS.json    also verify NUT-12 DLEQ proofs against mint keys
-  nutcheck token TOKEN --fetch             fetch keys from the token's mint (GET /v1/keys/{id}) and verify
+  nutlint token TOKEN                     decode + structural checks
+  nutlint token creqA...                  decode a NUT-18 payment request
+  nutlint token TOKEN --keys KEYS.json    also verify NUT-12 DLEQ proofs against mint keys
+  nutlint token TOKEN --fetch             fetch keys from the token's mint (GET /v1/keys/{id}) and verify
 
 KEYS.json is a mint /v1/keys response ({"keysets": [{"id", "unit", "keys": {amount: pubkey}}]}).
 Nothing is sent anywhere unless --fetch is given; then only the public keyset is downloaded.
@@ -85,7 +85,7 @@ def load_keys(path=None, mint=None, keyset_ids=()):
         docs = []
         for kid in keyset_ids:
             url = mint.rstrip("/") + "/v1/keys/" + kid
-            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "nutcheck"}), timeout=15) as r:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "nutlint"}), timeout=15) as r:
                 docs.append(json.load(r))
     for doc in docs:
         for ks in doc.get("keysets", []):

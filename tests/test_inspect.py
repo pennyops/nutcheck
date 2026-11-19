@@ -1,17 +1,17 @@
-"""Round-trip test for `nutcheck token`: build a token with DLEQ proofs from a known mint key, verify, then tamper."""
+"""Round-trip test for `nutlint token`: build a token with DLEQ proofs from a known mint key, verify, then tamper."""
 import json
 import os
 import sys
 import tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from nutcheck import secp, tokencheck as inspect  # noqa: E402
-from nutcheck.nut00 import hash_to_curve  # noqa: E402
-from nutcheck.nut12 import prove  # noqa: E402
-from nutcheck.tokens import serialize_v4  # noqa: E402
+from nutlint import secp, tokencheck as inspect  # noqa: E402
+from nutlint.nut00 import hash_to_curve  # noqa: E402
+from nutlint.nut12 import prove  # noqa: E402
+from nutlint.tokens import serialize_v4  # noqa: E402
 
 KID = "00ad268c4d1f5826"
-PRIV = {a: int.from_bytes(secp.sha256(b"nutcheck test mint %d" % a), "big") % secp.N for a in (1, 2, 4, 8)}
+PRIV = {a: int.from_bytes(secp.sha256(b"nutlint test mint %d" % a), "big") % secp.N for a in (1, 2, 4, 8)}
 
 
 def make_proof(amount, secret, r):

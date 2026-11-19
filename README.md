@@ -1,6 +1,6 @@
-# nutcheck
+# nutlint
 
-[![check-nuts-vectors](https://github.com/pennyops/nutcheck/actions/workflows/vectors.yml/badge.svg)](https://github.com/pennyops/nutcheck/actions/workflows/vectors.yml)
+[![check-nuts-vectors](https://github.com/pennyops/nutlint/actions/workflows/vectors.yml/badge.svg)](https://github.com/pennyops/nutlint/actions/workflows/vectors.yml)
 
 Independent, dependency-free checker for the Cashu protocol test vectors in
 [cashubtc/nuts](https://github.com/cashubtc/nuts) (`tests/*.md`).
@@ -16,7 +16,7 @@ Built from scratch for [Nut November 2026](https://nutnovember.org) (#NutNovembe
 the whole project (first commit 2026-11-19, MIT) and the spec pull requests it led to
 (cashubtc/nuts #484-#489) were made during November. Nothing existed before.
 
-Not to be confused with [nutcheck.org](https://nutcheck.org), an unrelated
+Formerly named nutcheck; renamed so it is not confused with [nutcheck.org](https://nutcheck.org), an unrelated
 #NutNovember project that grades live Cashu mints. This repo checks the
 *specification* (test vectors and prose examples in cashubtc/nuts) offline;
 it never talks to a mint unless you pass `--fetch`.
@@ -31,14 +31,14 @@ Use it to:
 
 ```
 git clone --depth 1 https://github.com/cashubtc/nuts
-python3 -m nutcheck ./nuts
+python3 -m nutlint ./nuts
 ```
 
 Or install it as a command (no dependencies):
 
 ```
-pip install git+https://github.com/pennyops/nutcheck
-nutcheck ./nuts
+pip install git+https://github.com/pennyops/nutlint
+nutlint ./nuts
 ```
 
 Sample output (excerpt):
@@ -71,7 +71,7 @@ WARN  PROSE   29.md:181 example point 037dc0b5e712a39e... is not on secp256k1
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
-## Inspect a token (`nutcheck token`)
+## Inspect a token (`nutlint token`)
 
 The same independent code also works on real tokens. Paste a `cashuA`/`cashuB` token to decode it and run
 basic checks (amounts, points on the curve, duplicate secrets, NUT-10 secret kind). With mint keys it also
@@ -79,10 +79,10 @@ verifies each NUT-12 DLEQ proof offline, so a receiver can check that the proofs
 mint's keyset without contacting the mint about the token itself:
 
 ```
-nutcheck token cashuB...                    # decode + structural checks, fully offline
-nutcheck token cashuB... --keys keys.json   # verify DLEQ against a saved /v1/keys response
-nutcheck token cashuB... --fetch            # download the public keyset from the token's mint, then verify
-nutcheck token creqA...                     # decode a NUT-18 payment request
+nutlint token cashuB...                    # decode + structural checks, fully offline
+nutlint token cashuB... --keys keys.json   # verify DLEQ against a saved /v1/keys response
+nutlint token cashuB... --fetch            # download the public keyset from the token's mint, then verify
+nutlint token creqA...                     # decode a NUT-18 payment request
 ```
 
 ```
@@ -100,12 +100,12 @@ sends the token anywhere; `--fetch` only downloads the mint's public keys.
 
 ## Check a spec pull request before merging
 
-nutcheck runs on any checkout of the spec, so a reviewer can test a proposed change to the vectors or examples:
+nutlint runs on any checkout of the spec, so a reviewer can test a proposed change to the vectors or examples:
 
 ```sh
 git clone https://github.com/cashubtc/nuts && cd nuts
 git fetch origin pull/488/head:pr488 && git checkout pr488   # any PR number
-cd .. && python3 -m nutcheck ./nuts
+cd .. && python3 -m nutlint ./nuts
 ```
 
 A PR that edits a test vector should still end with `0 failed`; a new `FAIL` line points at the vector that no longer matches the code path it describes.
@@ -135,7 +135,7 @@ Planned: more NUTs as vectors are published.
 
 Findings so far (status as of Nov 19, 2026):
 
-| nutcheck output | Spec PR | Status |
+| nutlint output | Spec PR | Status |
 |---|---|---|
 | NUT-18 vectors use standard, not urlsafe, base64 | [#484](https://github.com/cashubtc/nuts/pull/484) | closed as duplicate; same fix merged in [#475](https://github.com/cashubtc/nuts/pull/475) |
 | NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage | [#485](https://github.com/cashubtc/nuts/pull/485) | open |
@@ -143,14 +143,14 @@ Findings so far (status as of Nov 19, 2026):
 | NUT-20 example mint request signature does not verify | [#487](https://github.com/cashubtc/nuts/pull/487) | open |
 | NUT-04 signature order not stated; NUT-23/25 example signatures out of output order | [#488](https://github.com/cashubtc/nuts/pull/488) | open |
 | NUT-05 async melt example missing common quote fields | [#489](https://github.com/cashubtc/nuts/pull/489) | open |
-| NUT-26 HTLC vector `nut10.d` typo | [#477](https://github.com/cashubtc/nuts/pull/477) (not mine) | open; nutcheck WARN clears on that branch |
+| NUT-26 HTLC vector `nut10.d` typo | [#477](https://github.com/cashubtc/nuts/pull/477) (not mine) | open; nutlint WARN clears on that branch |
 
 ## Is the checker itself trustworthy? (mutation self-test)
 
-A checker that always says PASS is useless, so nutcheck ships a mutation test:
+A checker that always says PASS is useless, so nutlint ships a mutation test:
 
 ```
-python3 -m nutcheck.mutate ./nuts [--per-file N] [--seed S]
+python3 -m nutlint.mutate ./nuts [--per-file N] [--seed S]
 ```
 
 It flips one hex digit inside random long hex values of each vector file,

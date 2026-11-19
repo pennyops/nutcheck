@@ -6,7 +6,7 @@ on:
     - cron: "17 6 * * *"
   workflow_dispatch:
 jobs:
-  nutcheck:
+  nutlint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,5 +14,5 @@ jobs:
         with:
           python-version: "3.12"
       - run: git clone --depth 1 https://github.com/cashubtc/nuts nuts
-      - run: python3 -m nutcheck ./nuts
+      - run: python3 -m nutlint ./nuts
       - run: python3 tests/test_inspect.py

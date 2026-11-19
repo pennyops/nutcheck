@@ -1,6 +1,6 @@
-"""Mutation self-test: prove that nutcheck actually detects broken vectors.
+"""Mutation self-test: prove that nutlint actually detects broken vectors.
 
-Usage: python3 -m nutcheck.mutate PATH_TO_NUTS_REPO [--per-file N] [--seed S]
+Usage: python3 -m nutlint.mutate PATH_TO_NUTS_REPO [--per-file N] [--seed S]
 
 For every test-vector file, pick up to N long hex strings (>= 32 hex chars)
 at random, flip one hex digit inside each, re-run that file's checker on the
