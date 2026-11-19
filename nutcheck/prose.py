@@ -112,3 +112,27 @@ def run_nut25(nuts_dir):
         print("WARN  NUT-25  25.md example mint request: quote has a pubkey but the request has no signature")
     elif not schnorr_verify(hashlib.sha256(msg_to_sign(req)).digest(), pk.group(1), sig):
         print("WARN  NUT-25  25.md example mint request: signature does not verify for the quoted pubkey")
+
+
+MELT_FIELDS = {"quote", "request", "amount", "unit", "method", "state", "expiry"}
+
+
+def run_quote_fields(nuts_dir):
+    """05.md: every example melt quote response should carry the common melt quote
+    fields. WARN (example-only) when one is missing. Found cashubtc/nuts#489."""
+    import json
+    path = os.path.join(nuts_dir, "05.md")
+    if not os.path.exists(path):
+        return
+    text = open(path, encoding="utf-8").read()
+    for m in re.finditer(r"\n\{\n(.*?)\n\}", text, re.S):
+        try:
+            d = json.loads("{\n" + m.group(1) + "\n}")
+        except ValueError:
+            continue
+        if not isinstance(d, dict) or "quote" not in d or "state" not in d:
+            continue
+        miss = sorted(MELT_FIELDS - set(d))
+        if miss:
+            line = text[:m.start()].count("\n") + 2
+            print(f"WARN  NUT-05  05.md:{line} example melt quote ({d['state']}) is missing {', '.join(miss)}")
