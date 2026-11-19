@@ -55,6 +55,18 @@ WARN  PROSE   29.md:181 example point 037dc0b5e712a39e... is not on secp256k1
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
+## Check a spec pull request before merging
+
+nutcheck runs on any checkout of the spec, so a reviewer can test a proposed change to the vectors or examples:
+
+```sh
+git clone https://github.com/cashubtc/nuts && cd nuts
+git fetch origin pull/488/head:pr488 && git checkout pr488   # any PR number
+cd .. && python3 -m nutcheck ./nuts
+```
+
+A PR that edits a test vector should still end with `0 failed`; a new `FAIL` line points at the vector that no longer matches the code path it describes.
+
 ## Coverage
 
 | NUT | What is checked |
