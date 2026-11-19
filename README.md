@@ -32,13 +32,15 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | NUT | What is checked |
 |-----|-----------------|
 | 00 | hash_to_curve, blinded messages, blinded signatures; TokenV3 encode/decode and prefix rejection; TokenV4 CBOR decode + byte-exact re-encode; raw `crawB` binary token |
+| 01 | keyset validation: reject truncated / uncompressed keys, accept u64 amounts up to 2^63 |
 | 02 | keyset ID v1 (`00`) and v2 (`01`, unit / input_fee_ppk / final_expiry) |
 | 11 | BIP340 signatures; SIG_INPUTS spendability (n_sigs multisig, locktime, refund keys); SIG_ALL `msg_to_sign` hashes |
 | 12 | DLEQ `hash_e`, deterministic nonce (exact e, s), BlindSignature and Proof (reblinded) verification |
 | 13 | BIP39 seed, legacy BIP32 derivation (v1), HMAC-SHA256 KDF (v2), P2PK key derivation |
+| 20 | quote-locking key derivation (m/129373'/20'/...), `msg_to_sign` bytes and hash, BIP340 mint-request signature, tamper rejection |
 
 Planned: NUT-11 SIG_ALL full request verification, NUT-18/26 payment requests,
-NUT-20, NUT-28, NUT-29.
+NUT-27, NUT-28, NUT-29.
 
 ## Warning
 
