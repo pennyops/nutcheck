@@ -2,6 +2,7 @@
 
 Usage:
   nutcheck token TOKEN                     decode + structural checks
+  nutcheck token creqA...                  decode a NUT-18 payment request
   nutcheck token TOKEN --keys KEYS.json    also verify NUT-12 DLEQ proofs against mint keys
   nutcheck token TOKEN --fetch             fetch keys from the token's mint (GET /v1/keys/{id}) and verify
 
@@ -92,11 +93,31 @@ def load_keys(path=None, mint=None, keyset_ids=()):
     return out
 
 
+NAMES = {"i": "id", "a": "amount", "u": "unit", "s": "single_use", "m": "mints", "d": "description",
+         "t": "transports", "nut10": "nut10_lock"}
+
+
+def show_request(req):
+    """Decode a NUT-18 payment request (creqA...) and print it in readable form."""
+    from .nut18 import decode_request, strip_undefined
+    try:
+        obj = strip_undefined(decode_request(req))
+    except Exception as e:  # noqa: BLE001
+        print(f"FAIL  cannot decode payment request: {type(e).__name__}: {e}")
+        return 1
+    print("NUT-18 payment request")
+    for k, v in obj.items():
+        print(f"{NAMES.get(k, k):12}: {json.dumps(v, default=_hex)}")
+    return 0
+
+
 def main(args):
     if not args or args[0].startswith("-"):
         print(__doc__)
         return 2
     token, rest = args[0], args[1:]
+    if token.strip().startswith("creqA"):
+        return show_request(token.strip())
     try:
         ver, mint, unit, memo, proofs = normalize(token)
     except Exception as e:  # noqa: BLE001
