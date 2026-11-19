@@ -61,6 +61,9 @@ def run(text, report):
                     report("NUT-29", f"signature[{i}] msg_to_sign bytes", msg.hex() == mb.group(1), f"got {msg.hex()}")
                 if mh:
                     report("NUT-29", f"signature[{i}] msg_hash", h.hex() == mh.group(1), f"got {h.hex()}")
+                ss = re.search(rf"^signature\[{i}\]: ([0-9a-f]{{128}})", sec, re.M)
+                if ss:
+                    report("NUT-29", f"signature[{i}] listing matches request JSON", ss.group(1) == sig, "differs")
                 if pk:
                     report("NUT-29", f"signature[{i}] valid BIP340 over full outputs", schnorr_verify(h, pk.group(1), sig), "invalid")
                     short = msg_to_sign({"quote": quote, "outputs": req["outputs"][:1]})
