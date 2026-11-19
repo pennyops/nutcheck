@@ -1,0 +1,35 @@
+"""Prose check: every compressed secp256k1 point (02/03 + 64 hex) quoted in the
+NN.md spec documents should be a valid curve point. Example-only values, so an
+invalid point is a WARN (spec typo), not a FAIL. Found cashubtc/nuts#486.
+"""
+import glob
+import os
+import re
+
+P = 2**256 - 2**32 - 977
+POINT = re.compile(r"(?<![0-9a-fA-F])(0[23][0-9a-f]{64})(?![0-9a-fA-F])")
+
+
+def on_curve(h):
+    x = int(h[2:], 16)
+    if x >= P:
+        return False
+    y2 = (pow(x, 3, P) + 7) % P
+    return y2 == 0 or pow(y2, (P - 1) // 2, P) == 1
+
+
+def run_dir(nuts_dir, report):
+    total = bad = 0
+    for f in sorted(glob.glob(os.path.join(nuts_dir, "[0-9][0-9].md"))):
+        name = os.path.basename(f)
+        n = 0
+        with open(f, encoding="utf-8") as fh:
+            for i, line in enumerate(fh, 1):
+                for m in POINT.finditer(line):
+                    n += 1
+                    if not on_curve(m.group(1)):
+                        bad += 1
+                        print(f"WARN  PROSE   {name}:{i} example point {m.group(1)[:16]}... is not on secp256k1")
+        total += n
+    report("PROSE", f"{total} example points in NN.md parsed", total > 0, "no points found")
+    return total, bad
