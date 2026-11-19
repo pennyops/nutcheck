@@ -40,9 +40,9 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 20 | quote-locking key derivation (m/129373'/20'/...), `msg_to_sign` bytes and hash, BIP340 mint-request signature, tamper rejection |
 | 27 | Nostr mint-backup key derivation (SHA256(seed \|\| domain separator), x-only pubkey) |
 | 28 | P2BK: ECDH Zx symmetry, blinding scalars r0..r10, blinded keys P', skStd/skNeg, parity rule (chosen key really signs for P'), example proof slots |
+| 29 | batch mint: offline request-shape rules (empty / duplicate quotes, signatures length), per-quote NUT-20 signature over the full outputs array |
 
-Planned: NUT-11 SIG_ALL full request verification, NUT-18/26 payment requests,
-NUT-29.
+Planned: NUT-11 SIG_ALL full request verification, NUT-18/26 payment requests.
 
 ## Warning
 
