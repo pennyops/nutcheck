@@ -37,7 +37,7 @@ PASS  NUT-12  deterministic proof verifies
 PASS  NUT-12  BlindSignature DLEQ valid
 PASS  NUT-12  Proof DLEQ valid (reblinded)
 ...
-237 checks, 237 passed, 0 failed
+241 checks, 241 passed, 0 failed
 ```
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
@@ -49,6 +49,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 00 | hash_to_curve, blinded messages, blinded signatures; TokenV3 encode/decode and prefix rejection; TokenV4 CBOR decode + byte-exact re-encode; raw `crawB` binary token |
 | 01 | keyset validation: reject truncated / uncompressed keys, accept u64 amounts up to 2^63 |
 | 02 | keyset ID v1 (`00`) and v2 (`01`, unit / input_fee_ppk / final_expiry) |
+| 08 | no vector file: the worked fee-return example in `08.md` (blank-output count, change amount, power-of-2 split) and the `max(ceil(log2(fee_reserve)), 1)` rule (enough outputs for any change up to the reserve) |
 | 11 | BIP340 signatures; SIG_INPUTS spendability (n_sigs multisig, locktime, refund keys); SIG_ALL `msg_to_sign` hashes and full swap/melt request verification (identical conditions, first-input witness, P2PK + NUT-14 HTLC preimage, multisig, refund after locktime) |
 | 12 | DLEQ `hash_e`, deterministic nonce (exact e, s), BlindSignature and Proof (reblinded) verification |
 | 13 | BIP39 seed, legacy BIP32 derivation (v1), HMAC-SHA256 KDF (v2), P2PK key derivation |
