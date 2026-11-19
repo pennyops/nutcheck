@@ -12,6 +12,10 @@ No wallet or mint codebase is imported, so a passing run means the published
 vectors agree with the spec prose, and a failing run points at either a vector
 or a spec ambiguity worth fixing.
 
+Built from scratch for [Nut November 2026](https://nutnovember.org) (#NutNovember):
+the whole project (first commit 2026-11-19, MIT) and the spec pull requests it led to
+(cashubtc/nuts #484-#489) were made during November. Nothing existed before.
+
 Use it to:
 
 - sanity-check vector changes in a NUT pull request before merging;
