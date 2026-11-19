@@ -65,7 +65,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
 Planned: more NUTs as vectors are published.
 
-Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64), [cashubtc/nuts#485](https://github.com/cashubtc/nuts/pull/485) (NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage), [cashubtc/nuts#486](https://github.com/cashubtc/nuts/pull/486) (4 example points in NUT-11/14/29 not on secp256k1), [cashubtc/nuts#487](https://github.com/cashubtc/nuts/pull/487) (NUT-20 example mint request signature does not verify), [cashubtc/nuts#488](https://github.com/cashubtc/nuts/pull/488) (NUT-04 signature order not stated; NUT-23/25 example signatures out of output order).
+Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64), [cashubtc/nuts#485](https://github.com/cashubtc/nuts/pull/485) (NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage), [cashubtc/nuts#486](https://github.com/cashubtc/nuts/pull/486) (4 example points in NUT-11/14/29 not on secp256k1), [cashubtc/nuts#487](https://github.com/cashubtc/nuts/pull/487) (NUT-20 example mint request signature does not verify), [cashubtc/nuts#488](https://github.com/cashubtc/nuts/pull/488) (NUT-04 signature order not stated; NUT-23/25 example signatures out of output order), [cashubtc/nuts#489](https://github.com/cashubtc/nuts/pull/489) (NUT-05 async melt example missing common quote fields).
 
 ## Is the checker itself trustworthy? (mutation self-test)
 
