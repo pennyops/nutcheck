@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nutlint"
-version = "0.1.0"
+version = "0.1.1"
 description = "Independent checker for the Cashu NUTs test vectors and spec examples (pure stdlib)"
 readme = "README.md"
 license = {text = "MIT"}
