@@ -69,3 +69,23 @@ def run_nut11(nuts_dir, report):
     s, w = json.loads(p["secret"]), json.loads(p["witness"])
     ok = schnorr_verify(hashlib.sha256(p["secret"].encode()).digest(), s[1]["data"], w["signatures"][0])
     report("NUT-11", "prose example: P2PK proof witness signature verifies", ok, "bad signature")
+
+
+def run_nut20(nuts_dir):
+    """20.md quotes a signed PostMintBolt11Request. WARN (example-only) if its
+    signature does not verify against the quoted pubkey."""
+    import hashlib
+    import json
+    from .nut11 import schnorr_verify
+    from .nut20 import msg_to_sign
+    path = os.path.join(nuts_dir, "20.md")
+    if not os.path.exists(path):
+        return
+    text = open(path, encoding="utf-8").read()
+    m = re.search(r'"quote": "[0-9a-f-]+",\s*"outputs"', text)
+    pk = re.search(r'"pubkey": "(0[23][0-9a-f]{64})"\n', text)
+    if not (m and pk):
+        return
+    req = json.JSONDecoder().raw_decode(text[text.rindex("{", 0, m.start()):])[0]
+    if not schnorr_verify(hashlib.sha256(msg_to_sign(req)).digest(), pk.group(1), req["signature"]):
+        print("WARN  NUT-20  20.md example mint request: signature does not verify for the quoted pubkey")
