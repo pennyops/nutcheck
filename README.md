@@ -62,6 +62,32 @@ WARN  PROSE   29.md:181 example point 037dc0b5e712a39e... is not on secp256k1
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 
+## Inspect a token (`nutcheck token`)
+
+The same independent code also works on real tokens. Paste a `cashuA`/`cashuB` token to decode it and run
+basic checks (amounts, points on the curve, duplicate secrets, NUT-10 secret kind). With mint keys it also
+verifies each NUT-12 DLEQ proof offline, so a receiver can check that the proofs were really signed by that
+mint's keyset without contacting the mint about the token itself:
+
+```
+nutcheck token cashuB...                    # decode + structural checks, fully offline
+nutcheck token cashuB... --keys keys.json   # verify DLEQ against a saved /v1/keys response
+nutcheck token cashuB... --fetch            # download the public keyset from the token's mint, then verify
+```
+
+```
+version : cashuB (V4 CBOR)
+mint    : https://mint.example
+unit    : sat
+proofs  : 2, total 10 sat
+ok    [0]      8 keyset 00ad268c4d1f5826 secret=random DLEQ valid
+FAIL  [1]      2 keyset 00ad268c4d1f5826 secret=random DLEQ INVALID  (DLEQ INVALID)
+```
+
+`tests/test_inspect.py` (run in CI) builds a token with DLEQ proofs from a known test key, checks that it
+passes, then flips one bit of a proof and checks that it is rejected. The tool never spends, swaps, or
+sends the token anywhere; `--fetch` only downloads the mint's public keys.
+
 ## Check a spec pull request before merging
 
 nutcheck runs on any checkout of the spec, so a reviewer can test a proposed change to the vectors or examples:
