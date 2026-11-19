@@ -39,6 +39,7 @@ def main(argv):
     prose.run_nut11(argv[1], report)
     prose.run_nut14(argv[1], report)
     prose.run_nut20(argv[1])
+    prose.run_nut25(argv[1])
     prose.run_dir(argv[1], report)
     fails = sum(1 for r in results if not r[2])
     print(f"\n{len(results)} checks, {len(results) - fails} passed, {fails} failed")
