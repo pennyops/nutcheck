@@ -38,9 +38,10 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 12 | DLEQ `hash_e`, deterministic nonce (exact e, s), BlindSignature and Proof (reblinded) verification |
 | 13 | BIP39 seed, legacy BIP32 derivation (v1), HMAC-SHA256 KDF (v2), P2PK key derivation |
 | 20 | quote-locking key derivation (m/129373'/20'/...), `msg_to_sign` bytes and hash, BIP340 mint-request signature, tamper rejection |
+| 27 | Nostr mint-backup key derivation (SHA256(seed \|\| domain separator), x-only pubkey) |
 
 Planned: NUT-11 SIG_ALL full request verification, NUT-18/26 payment requests,
-NUT-27, NUT-28, NUT-29.
+NUT-28, NUT-29.
 
 ## Warning
 
