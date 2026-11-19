@@ -36,6 +36,7 @@ def main(argv):
     if os.path.exists(p08):
         with open(p08, encoding="utf-8") as f:
             nut08.run_text(f.read(), report)
+    prose.run_nut11(argv[1], report)
     prose.run_nut14(argv[1], report)
     prose.run_dir(argv[1], report)
     fails = sum(1 for r in results if not r[2])
