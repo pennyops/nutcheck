@@ -33,3 +33,19 @@ def run_dir(nuts_dir, report):
         total += n
     report("PROSE", f"{total} example points in NN.md parsed", total > 0, "no points found")
     return total, bad
+
+
+def run_nut14(nuts_dir, report):
+    """14.md quotes a matching hash / preimage pair: SHA256(preimage) == data."""
+    import hashlib
+    path = os.path.join(nuts_dir, "14.md")
+    if not os.path.exists(path):
+        return
+    text = open(path, encoding="utf-8").read()
+    d = re.search(r"Proof\.secret\.data = '([0-9a-f]{64})'", text)
+    p = re.search(r"Proof\.witness\.preimage = '([0-9a-f]{64})'", text)
+    if not (d and p):
+        report("NUT-14", "hash/preimage example found in 14.md", False, "pattern not found")
+        return
+    ok = hashlib.sha256(bytes.fromhex(p.group(1))).hexdigest() == d.group(1)
+    report("NUT-14", "prose example: SHA256(preimage) == Secret.data", ok, "hash mismatch")
