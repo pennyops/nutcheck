@@ -5,7 +5,7 @@ import sys
 import tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from nutcheck import inspect, secp  # noqa: E402
+from nutcheck import secp, tokencheck as inspect  # noqa: E402
 from nutcheck.nut00 import hash_to_curve  # noqa: E402
 from nutcheck.nut12 import prove  # noqa: E402
 from nutcheck.tokens import serialize_v4  # noqa: E402
