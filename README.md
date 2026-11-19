@@ -34,7 +34,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 00 | hash_to_curve, blinded messages, blinded signatures; TokenV3 encode/decode and prefix rejection; TokenV4 CBOR decode + byte-exact re-encode; raw `crawB` binary token |
 | 01 | keyset validation: reject truncated / uncompressed keys, accept u64 amounts up to 2^63 |
 | 02 | keyset ID v1 (`00`) and v2 (`01`, unit / input_fee_ppk / final_expiry) |
-| 11 | BIP340 signatures; SIG_INPUTS spendability (n_sigs multisig, locktime, refund keys); SIG_ALL `msg_to_sign` hashes |
+| 11 | BIP340 signatures; SIG_INPUTS spendability (n_sigs multisig, locktime, refund keys); SIG_ALL `msg_to_sign` hashes and full swap/melt request verification (identical conditions, first-input witness, P2PK + NUT-14 HTLC preimage, multisig, refund after locktime) |
 | 12 | DLEQ `hash_e`, deterministic nonce (exact e, s), BlindSignature and Proof (reblinded) verification |
 | 13 | BIP39 seed, legacy BIP32 derivation (v1), HMAC-SHA256 KDF (v2), P2PK key derivation |
 | 18 | payment requests: `creqA` + CBOR decode equals the JSON, byte-exact CBOR re-encode (incl. CBOR `undefined`); WARNs on non-urlsafe base64 in vectors |
@@ -44,7 +44,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 28 | P2BK: ECDH Zx symmetry, blinding scalars r0..r10, blinded keys P', skStd/skNeg, parity rule (chosen key really signs for P'), example proof slots |
 | 29 | batch mint: offline request-shape rules (empty / duplicate quotes, signatures length), per-quote NUT-20 signature over the full outputs array |
 
-Planned: NUT-11 SIG_ALL full request verification.
+Planned: more NUTs as vectors are published.
 
 Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64).
 
