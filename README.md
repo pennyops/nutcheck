@@ -48,6 +48,23 @@ Planned: more NUTs as vectors are published.
 
 Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64).
 
+## Is the checker itself trustworthy? (mutation self-test)
+
+A checker that always says PASS is useless, so nutcheck ships a mutation test:
+
+```
+python3 -m nutcheck.mutate ./nuts [--per-file N] [--seed S]
+```
+
+It flips one hex digit inside random long hex values of each vector file,
+re-runs the checks on the mutated text, and reports how many corruptions were
+caught. Current score against cashubtc/nuts HEAD (seed 1, 8 per file):
+67/79 (85%). Uncaught locations are listed by file and line. They are
+values the vectors only show as examples and that nothing is derived from,
+e.g. NUT-01 keyset maps (only the key format is specified), the NUT-29
+keyset `id` (not part of the signed message), or NUT-11 secret nonces in
+examples that come without a signature to check against.
+
 ## Warning
 
 The crypto here is NOT constant time and is meant only for checking public
