@@ -90,7 +90,17 @@ A PR that edits a test vector should still end with `0 failed`; a new `FAIL` lin
 
 Planned: more NUTs as vectors are published.
 
-Findings so far: [cashubtc/nuts#484](https://github.com/cashubtc/nuts/pull/484) (NUT-18 vectors use standard, not urlsafe, base64; closed as a duplicate of [#475](https://github.com/cashubtc/nuts/pull/475), which regenerated the same vectors and was merged on Nov 19. nutcheck passes on the fixed vectors), [cashubtc/nuts#485](https://github.com/cashubtc/nuts/pull/485) (NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage), [cashubtc/nuts#486](https://github.com/cashubtc/nuts/pull/486) (4 example points in NUT-11/14/29 not on secp256k1), [cashubtc/nuts#487](https://github.com/cashubtc/nuts/pull/487) (NUT-20 example mint request signature does not verify), [cashubtc/nuts#488](https://github.com/cashubtc/nuts/pull/488) (NUT-04 signature order not stated; NUT-23/25 example signatures out of output order), [cashubtc/nuts#489](https://github.com/cashubtc/nuts/pull/489) (NUT-05 async melt example missing common quote fields).
+Findings so far (status as of Nov 19, 2026):
+
+| nutcheck output | Spec PR | Status |
+|---|---|---|
+| NUT-18 vectors use standard, not urlsafe, base64 | [#484](https://github.com/cashubtc/nuts/pull/484) | closed as duplicate; same fix merged in [#475](https://github.com/cashubtc/nuts/pull/475) |
+| NUT-02 prose vs code: `final_expiry: 0` in the keyset ID v2 preimage | [#485](https://github.com/cashubtc/nuts/pull/485) | open |
+| 4 example points in NUT-11/14/29 not on secp256k1 | [#486](https://github.com/cashubtc/nuts/pull/486) | open |
+| NUT-20 example mint request signature does not verify | [#487](https://github.com/cashubtc/nuts/pull/487) | open |
+| NUT-04 signature order not stated; NUT-23/25 example signatures out of output order | [#488](https://github.com/cashubtc/nuts/pull/488) | open |
+| NUT-05 async melt example missing common quote fields | [#489](https://github.com/cashubtc/nuts/pull/489) | open |
+| NUT-26 HTLC vector `nut10.d` typo | [#477](https://github.com/cashubtc/nuts/pull/477) (not mine) | open; nutcheck WARN clears on that branch |
 
 ## Is the checker itself trustworthy? (mutation self-test)
 
