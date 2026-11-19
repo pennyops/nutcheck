@@ -37,7 +37,7 @@ PASS  NUT-12  deterministic proof verifies
 PASS  NUT-12  BlindSignature DLEQ valid
 PASS  NUT-12  Proof DLEQ valid (reblinded)
 ...
-241 checks, 241 passed, 0 failed
+242 checks, 242 passed, 0 failed
 ```
 
 Exit code 0 = all checks pass, 1 = at least one vector disagrees.
@@ -59,6 +59,7 @@ Exit code 0 = all checks pass, 1 = at least one vector disagrees.
 | 27 | Nostr mint-backup key derivation (SHA256(seed \|\| domain separator), x-only pubkey) |
 | 28 | P2BK: ECDH Zx symmetry, blinding scalars r0..r10, blinded keys P', skStd/skNeg, parity rule (chosen key really signs for P'), example proof slots |
 | 29 | batch mint: offline request-shape rules (empty / duplicate quotes, signatures length), per-quote NUT-20 signature over the full outputs array |
+| 14 | no vector file: the hash / preimage example pair in `14.md` (SHA256(preimage) == Secret.data) |
 | prose | every compressed point (`02`/`03` + 64 hex) quoted in the `NN.md` spec text is checked to be on secp256k1; invalid example points are WARNs |
 
 Planned: more NUTs as vectors are published.
