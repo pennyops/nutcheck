@@ -1,5 +1,7 @@
 # nutcheck
 
+[![check-nuts-vectors](https://github.com/pennyops/nutcheck/actions/workflows/vectors.yml/badge.svg)](https://github.com/pennyops/nutcheck/actions/workflows/vectors.yml)
+
 Independent, dependency-free checker for the Cashu protocol test vectors in
 [cashubtc/nuts](https://github.com/cashubtc/nuts) (`tests/*.md`).
 
