@@ -49,3 +49,8 @@ def main(argv):
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
+
+
+def cli():
+    """Console-script entry point (`nutcheck PATH`)."""
+    sys.exit(main(sys.argv))
