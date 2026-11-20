@@ -8,6 +8,8 @@ import re
 
 P = 2**256 - 2**32 - 977
 POINT = re.compile(r"(?<![0-9a-fA-F])(0[23][0-9a-f]{64})(?![0-9a-fA-F])")
+# v3 keyset ids are 33 bytes and can start 02/03; they are hashes, not points
+KEYSET_ID_KEY = re.compile(r"[\"']?(id|keyset_id|keysetId)[\"']?\s*[:=]\s*[\"']?$")
 
 
 def on_curve(h):
@@ -26,6 +28,8 @@ def run_dir(nuts_dir, report):
         with open(f, encoding="utf-8") as fh:
             for i, line in enumerate(fh, 1):
                 for m in POINT.finditer(line):
+                    if KEYSET_ID_KEY.search(line[:m.start()]):
+                        continue
                     n += 1
                     if not on_curve(m.group(1)):
                         bad += 1

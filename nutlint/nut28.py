@@ -56,8 +56,31 @@ def run(text, report):
         report("NUT-28", f"chosen sk {i} signs for P'{i}", secp.encode(secp.mul(k)).hex() == Pb, "parity rule wrong")
     proofs = [json.loads(b) for b in re.findall(r"```json\n(.*?)```", text, re.S)]
     for pr in proofs:
+        if "receiver_static" in pr:
+            slot_map(pr, report)
+            continue
+        if "secret" not in pr:
+            continue
         kind, body = json.loads(pr["secret"])
         tags = {t[0]: t[1:] for t in body.get("tags", [])}
         slots = ([body["data"]] if kind == "P2PK" else [None]) + tags.get("pubkeys", []) + tags.get("refund", [])
         ok = pr.get("p2pk_e") == inp["E"] and all(s is None or s == pv.get(str(i)) for i, s in enumerate(slots))
         report("NUT-28", f"{kind} example proof keys are P' at their slots, p2pk_e = E", ok, f"slots {slots}")
+
+
+def slot_map(v, report):
+    """v3 slot map: slot0 blinds the receiver key, slot i>=1 blinds leaf keys, each with its own ECDH."""
+    E = secp.decode(v["ephemeral_E"])
+    e = next((k for k in range(1, 100) if secp.encode(secp.mul(k)) == secp.encode(E)), None)
+    if e is None:
+        report("NUT-28", "slot map: ephemeral is a small test key", False, "E not k*G for k<100")
+        return
+    P0, P1 = secp.decode(v["receiver_static"]), secp.decode(v["slot1_key"])
+    r0, r1 = r_i(shared_x(e, P0), 0), r_i(shared_x(e, P1), 1)
+    report("NUT-28", "slot map: slot0_r", f"{r0:064x}" == v.get("slot0_r"), f"got {r0:064x}")
+    b0 = secp.encode(secp.add(P0, secp.mul(r0))).hex()
+    report("NUT-28", "slot map: slot0_blinded = P + r0*G", b0 == v.get("slot0_blinded"), f"got {b0}")
+    b1 = secp.encode(secp.add(P1, secp.mul(r1))).hex()
+    report("NUT-28", "slot map: slot1_blinded = P4 + r1*G", b1 == v.get("slot1_blinded"), f"got {b1}")
+    leaf = v.get("leaf_with_blinded_slot1", "")
+    report("NUT-28", "slot map: leaf carries slot1_blinded", b1 in leaf, "blinded key not in leaf bytes")

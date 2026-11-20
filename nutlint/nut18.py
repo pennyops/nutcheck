@@ -21,7 +21,7 @@ def decode_request(s):
 
 
 def run(text, report):
-    for sec in re.split(r"^### ", text, flags=re.M)[1:]:
+    for sec in re.split(r"^#{3,4} ", text, flags=re.M)[1:]:  # h4 subsections are their own vectors
         title = sec.splitlines()[0].strip()
         js = re.search(r"```json\n(.*?)```", sec, re.S)
         enc = re.search(r"```\n(creqA[^\n]+)\n```", sec)

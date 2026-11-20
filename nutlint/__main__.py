@@ -32,6 +32,8 @@ def main(argv):
 
     for fname, mod in MODULES:
         path = os.path.join(tests, fname)
+        if not os.path.exists(path):  # keysets-v3 layout moves superseded NUTs to legacy/
+            path = os.path.join(argv[1], "legacy", "tests", fname)
         if not os.path.exists(path):
             print(f"SKIP  {fname} missing")
             continue
