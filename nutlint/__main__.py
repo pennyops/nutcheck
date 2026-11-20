@@ -20,7 +20,14 @@ def main(argv):
     if len(argv) >= 2 and argv[1] == "token":
         from . import tokencheck
         return tokencheck.main(argv[2:])
+    if len(argv) == 2 and argv[1] in ("-h", "--help"):
+        print(__doc__)
+        return 0
     if len(argv) != 2:
+        print(__doc__)
+        return 2
+    if not os.path.isdir(os.path.join(argv[1], "tests")) and not os.path.isdir(os.path.join(argv[1], "legacy", "tests")):
+        print(f"nutlint: {argv[1]!r} does not look like a cashubtc/nuts checkout (no tests/ directory)\n")
         print(__doc__)
         return 2
     tests = os.path.join(argv[1], "tests")
