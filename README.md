@@ -14,7 +14,7 @@ or a spec ambiguity worth fixing.
 
 Built from scratch for [Nut November 2026](https://nutnovember.org) (#NutNovember):
 the whole project (first commit 2026-11-19, MIT) and the spec pull requests it led to
-(cashubtc/nuts #484-#489) were made during November. Nothing existed before.
+(cashubtc/nuts #484-#489, #491) were made during November. Nothing existed before.
 
 Formerly named nutcheck; renamed so it is not confused with [nutcheck.org](https://nutcheck.org), an unrelated
 #NutNovember project that grades live Cashu mints. This repo checks the
@@ -156,6 +156,7 @@ Findings so far (status as of Nov 19, 2026):
 | NUT-20 example mint request signature does not verify | [#487](https://github.com/cashubtc/nuts/pull/487) | open |
 | NUT-04 signature order not stated; NUT-23/25 example signatures out of output order | [#488](https://github.com/cashubtc/nuts/pull/488) | open |
 | NUT-05 async melt example missing common quote fields | [#489](https://github.com/cashubtc/nuts/pull/489) | open |
+| NUT-10 key-only tag example vs NUT-11 (key-only `pubkeys` is malformed) | [#491](https://github.com/cashubtc/nuts/pull/491) | open |
 | NUT-26 HTLC vector `nut10.d` typo | [#477](https://github.com/cashubtc/nuts/pull/477) (not mine) | open; nutlint WARN clears on that branch |
 
 ## Is the checker itself trustworthy? (mutation self-test)
