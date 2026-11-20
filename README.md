@@ -37,7 +37,7 @@ python3 -m nutlint ./nuts
 Or install it as a command (no dependencies):
 
 ```
-pip install git+https://github.com/pennyops/nutlint@v0.1.1   # or without @v0.1.1 for latest main
+pip install git+https://github.com/pennyops/nutlint@v0.1.2   # or without @v0.1.2 for latest main
 nutlint ./nuts
 ```
 
@@ -104,7 +104,7 @@ Run nutlint in CI on a checkout of the spec (for example on every pull request t
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: pennyops/nutlint@v0.1.1
+- uses: pennyops/nutlint@v0.1.2
   with:
     path: .   # the spec checkout
 ```
